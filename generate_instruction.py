@@ -4,7 +4,7 @@ batch_selfinstruct_generate.py
 run:
 python -m generate_instruction generate_instruction_following_data \
   --output_dir ./ \
-  --num_instructions_to_generate 10 \
+  --num_instructions_to_generate 1 \
   --model_name="text-davinci-003" \
 """
 import time
@@ -128,7 +128,7 @@ def generate_instruction_following_data(
 ):
     seed_tasks = [json.loads(l) for l in open(seed_tasks_path, "r")]
     seed_instruction_data = [
-        {"instruction": t["instruction"], "input": t["instances"][0]["input"], "output": t["instances"][0]["output"]}
+        {"instruction": t["instruction"], "input": t["input"], "output": t["output"]}
         for t in seed_tasks
     ]
     print(f"Loaded {len(seed_instruction_data)} human-written seed instructions")
