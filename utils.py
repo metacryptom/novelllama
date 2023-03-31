@@ -183,7 +183,7 @@ def jdump(obj, f, mode="w", indent=4, default=str):
     """
     f = _make_w_io_base(f, mode)
     if isinstance(obj, (dict, list)):
-        json.dump(obj, f, indent=indent, default=default)
+        json.dump(obj, f, ensure_ascii=False, indent=indent, default=default)
     elif isinstance(obj, str):
         f.write(obj)
     else:

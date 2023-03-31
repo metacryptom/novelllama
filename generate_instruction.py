@@ -36,7 +36,7 @@ def encode_prompt(prompt_instructions):
     for idx, task_dict in enumerate(prompt_instructions):
         (instruction, input, output) = task_dict["instruction"], task_dict["input"], task_dict["output"]
         instruction = re.sub(r"\s+", " ", instruction).strip().rstrip(":")
-        input = "<无输入>" if input.lower() == "" else input
+        input = "<无输入>" if input  == None or input.lower() == "" else input
         prompt += f"###\n"
         prompt += f"{idx + 1}. 指令: {instruction}\n"
         prompt += f"{idx + 1}. 输入:\n{input}\n"
@@ -116,7 +116,7 @@ def find_word_in_string(w, s):
 
 def generate_instruction_following_data(
     output_dir="./",
-    seed_tasks_path="./zh_seed_tasks.json",
+    seed_tasks_path="./novel_seed_tasks.json",
     num_instructions_to_generate=1,
     api="completion",
     model_name="text-davinci-003",
@@ -138,8 +138,8 @@ def generate_instruction_following_data(
     request_idx = 0
     # load the LM-generated instructions
     machine_instruction_data = []
-    if os.path.exists(os.path.join(output_dir, "Belle.train.json")):
-        machine_instruction_data = utils.jload(os.path.join(output_dir, "Belle.train.json"))
+    if os.path.exists(os.path.join(output_dir, "regen.json")):
+        machine_instruction_data = utils.jload(os.path.join(output_dir, "regen.json"))
         print(f"Loaded {len(machine_instruction_data)} machine-generated instructions")
 
 
